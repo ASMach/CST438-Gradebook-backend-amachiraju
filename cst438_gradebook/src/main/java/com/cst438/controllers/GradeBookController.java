@@ -169,5 +169,23 @@ public class GradeBookController {
 		
 		return assignment;
 	}
+	
+	private Assignment deleteAssignment(int assignmentId, String email) {
+		// get assignment 
+		Assignment assignment = assignmentRepository.findById(assignmentId).orElse(null);
+		if (assignment == null) {
+			throw new ResponseStatusException( HttpStatus.BAD_REQUEST, "Assignment not found. "+assignmentId );
+		}
+		// check that user is the course instructor
+		if (!assignment.getCourse().getInstructor().equals(email)) {
+			throw new ResponseStatusException( HttpStatus.UNAUTHORIZED, "Not Authorized. " );
+		}
+		// check that the assignment has no grades
+		if (assignment.getNeedsGrading() == 0) {
+			throw new ResponseStatusException( HttpStatus.UNAUTHORIZED, "Cannot delete assignment that has been graded already. " );
+		}
+		
+		return assignment;
+	}
 
 }
