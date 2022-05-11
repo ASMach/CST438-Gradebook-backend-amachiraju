@@ -187,5 +187,21 @@ public class GradeBookController {
 		
 		return assignment;
 	}
+	
+	private Assignment changeAssignmentName(int assignmentId, String email, String newName) {
+		// get assignment 
+		Assignment assignment = assignmentRepository.findById(assignmentId).orElse(null);
+		if (assignment == null) {
+			throw new ResponseStatusException( HttpStatus.BAD_REQUEST, "Assignment not found. "+assignmentId );
+		}
+		// check that user is the course instructor
+		if (!assignment.getCourse().getInstructor().equals(email)) {
+			throw new ResponseStatusException( HttpStatus.UNAUTHORIZED, "Not Authorized. " );
+		}
+		
+		assignment.setName(newName);
+		
+		return assignment;
+	}
 
 }
