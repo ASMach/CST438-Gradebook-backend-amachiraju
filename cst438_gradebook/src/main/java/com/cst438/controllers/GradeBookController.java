@@ -1,5 +1,6 @@
 package com.cst438.controllers;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -164,6 +165,24 @@ public class GradeBookController {
 		if (assignment == null) {
 			throw new ResponseStatusException( HttpStatus.BAD_REQUEST, "Assignment not found. "+assignmentId );
 		}
+		// check that user is the course instructor
+		if (!assignment.getCourse().getInstructor().equals(email)) {
+			throw new ResponseStatusException( HttpStatus.UNAUTHORIZED, "Not Authorized. " );
+		}
+		
+		return assignment;
+	}
+	
+	@PutMapping("/gradebook/{id}")
+	@Transactional
+	private Assignment createAssignment(int assignmentId, String name, Date dueDate, String email) {
+		// get assignment 
+		Assignment assignment = new Assignment();
+		
+		assignment.setId(assignmentId);
+		assignment.setName(name);
+		assignment.setDueDate(dueDate);
+		
 		// check that user is the course instructor
 		if (!assignment.getCourse().getInstructor().equals(email)) {
 			throw new ResponseStatusException( HttpStatus.UNAUTHORIZED, "Not Authorized. " );
