@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -170,6 +172,8 @@ public class GradeBookController {
 		return assignment;
 	}
 	
+	@DeleteMapping("/gradebook/{id}")
+	@Transactional
 	private Assignment deleteAssignment(int assignmentId, String email) {
 		// get assignment 
 		Assignment assignment = assignmentRepository.findById(assignmentId).orElse(null);
@@ -188,6 +192,8 @@ public class GradeBookController {
 		return assignment;
 	}
 	
+	@PatchMapping("/gradebook/{id}")
+	@Transactional
 	private Assignment changeAssignmentName(int assignmentId, String email, String newName) {
 		// get assignment 
 		Assignment assignment = assignmentRepository.findById(assignmentId).orElse(null);
