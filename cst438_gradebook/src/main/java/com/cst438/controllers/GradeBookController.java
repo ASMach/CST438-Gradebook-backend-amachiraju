@@ -173,9 +173,9 @@ public class GradeBookController {
 		return assignment;
 	}
 	
-	@PutMapping("/gradebook/{id}")
+	@PostMapping("/gradebook/{id}")
 	@Transactional
-	private Assignment createAssignment(int assignmentId, String name, Date dueDate, String email) {
+	public Assignment createAssignment(int assignmentId, String name, Date dueDate, String email) {
 		// get assignment 
 		Assignment assignment = new Assignment();
 		
