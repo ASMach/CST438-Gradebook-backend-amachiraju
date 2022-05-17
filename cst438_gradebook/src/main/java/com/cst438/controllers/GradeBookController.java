@@ -173,13 +173,12 @@ public class GradeBookController {
 		return assignment;
 	}
 	
-	@PostMapping("/gradebook/{id}")
+	@PostMapping("/gradebook/")
 	@Transactional
-	public Assignment createAssignment(int assignmentId, String name, Date dueDate, String email) {
+	public Assignment createAssignment(String name, Date dueDate, String email) {
 		// get assignment 
 		Assignment assignment = new Assignment();
 		
-		assignment.setId(assignmentId);
 		assignment.setName(name);
 		assignment.setDueDate(dueDate);
 		
