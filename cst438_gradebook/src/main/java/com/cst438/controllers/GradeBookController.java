@@ -1,5 +1,6 @@
 package com.cst438.controllers;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -170,6 +173,25 @@ public class GradeBookController {
 		return assignment;
 	}
 	
+	@PostMapping("/gradebook/")
+	@Transactional
+	public Assignment createAssignment(String name, Date dueDate, String email) {
+		// get assignment 
+		Assignment assignment = new Assignment();
+		
+		assignment.setName(name);
+		assignment.setDueDate(dueDate);
+		
+		// check that user is the course instructor
+		if (!assignment.getCourse().getInstructor().equals(email)) {
+			throw new ResponseStatusException( HttpStatus.UNAUTHORIZED, "Not Authorized. " );
+		}
+		
+		return assignment;
+	}
+	
+	@DeleteMapping("/gradebook/{id}")
+	@Transactional
 	private Assignment deleteAssignment(int assignmentId, String email) {
 		// get assignment 
 		Assignment assignment = assignmentRepository.findById(assignmentId).orElse(null);
@@ -188,6 +210,8 @@ public class GradeBookController {
 		return assignment;
 	}
 	
+	@PatchMapping("/gradebook/{id}")
+	@Transactional
 	private Assignment changeAssignmentName(int assignmentId, String email, String newName) {
 		// get assignment 
 		Assignment assignment = assignmentRepository.findById(assignmentId).orElse(null);
