@@ -2,10 +2,12 @@ package com.cst438.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.cst438.domain.Course;
@@ -31,10 +33,20 @@ public class EnrollmentController {
 	@Transactional
 	public EnrollmentDTO addEnrollment(@RequestBody EnrollmentDTO enrollmentDTO) {
 		
-		//TODO  complete this method in homework 4
+		RestTemplate httpTemplate = new RestTemplate();
 		
-		return null;
+		System.out.println("Sending http message: " + enrollmentDTO);
+		ResponseEntity<EnrollmentDTO> response = httpTemplate.postForEntity("http://localhost:8081/enrollment", enrollmentDTO, EnrollmentDTO.class);
 		
+		HttpStatus rc = response.getStatusCode();
+		
+		System.out.println("HTTP status: " + rc);
+		
+		EnrollmentDTO returnObject = response.getBody();
+		
+		System.out.println(returnObject);
+		
+		return returnObject;
 	}
 
 }
