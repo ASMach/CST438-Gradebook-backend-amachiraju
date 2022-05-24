@@ -1,6 +1,5 @@
 package com.cst438.controllers;
 
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,9 +25,6 @@ public class EnrollmentController {
 
 	@Autowired
 	EnrollmentRepository enrollmentRepository;
-	
-	@Autowired
-	RabbitTemplate rabbitTemplate;
 	
 	@Autowired
 	Queue queue;
