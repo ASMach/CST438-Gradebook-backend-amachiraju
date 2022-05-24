@@ -11,7 +11,6 @@ import org.springframework.web.client.RestTemplate;
 import com.cst438.domain.CourseRepository;
 import com.cst438.domain.EnrollmentDTO;
 import com.cst438.domain.EnrollmentRepository;
-import com.rabbitmq.client.AMQP.Queue;
 
 @RestController
 public class EnrollmentController {
@@ -21,9 +20,6 @@ public class EnrollmentController {
 
 	@Autowired
 	EnrollmentRepository enrollmentRepository;
-	
-	@Autowired
-	Queue queue;
 
 	/*
 	 * endpoint used by registration service to add an enrollment to an existing
