@@ -46,8 +46,8 @@ public class RegistrationServiceMQ extends RegistrationService {
 	@RabbitListener(queues = "gradebook-queue")
 	@Transactional
 	public void receive(EnrollmentDTO enrollmentDTO) {
+		System.out.println("Received Enrollment Message" + enrollmentDTO);
 		
-		//TODO  complete this method in homework 4
 		
 	}
 
@@ -55,7 +55,7 @@ public class RegistrationServiceMQ extends RegistrationService {
 	@Override
 	public void sendFinalGrades(int course_id, CourseDTOG courseDTO) {
 		 
-		System.out.println("Sending Final Grade message...");
+		System.out.println("Sending Final Grade message" + courseDTO + "...");
 		rabbitTemplate.convertAndSend(queue.getName(), courseDTO);
 		System.out.println("Final Grade message sent");
 		
