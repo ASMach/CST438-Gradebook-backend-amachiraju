@@ -25,6 +25,9 @@ public class RegistrationServiceMQ extends RegistrationService {
 
 	@Autowired
 	private RabbitTemplate rabbitTemplate;
+	
+	@Autowired
+	Queue queue;
 
 	public RegistrationServiceMQ() {
 		System.out.println("MQ registration service ");
@@ -52,7 +55,9 @@ public class RegistrationServiceMQ extends RegistrationService {
 	@Override
 	public void sendFinalGrades(int course_id, CourseDTOG courseDTO) {
 		 
-		//TODO  complete this method in homework 4
+		System.out.println("Sending Final Grade message...");
+		rabbitTemplate.convertAndSend(queue.getName(), courseDTO);
+		System.out.println("Final Grade message sent");
 		
 	}
 
