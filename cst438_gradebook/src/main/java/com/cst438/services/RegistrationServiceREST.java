@@ -3,7 +3,7 @@ package com.cst438.services;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.client.RestTemplate;
 
-import com.cst438.domain.Enrollment;
+import com.cst438.domain.EnrollmentDTO;
 import com.cst438.domain.CourseDTOG;
 
 public class RegistrationServiceREST extends RegistrationService {
@@ -21,7 +21,7 @@ public class RegistrationServiceREST extends RegistrationService {
 	@Override
 	public void sendFinalGrades(int course_id , CourseDTOG courseDTO) { 
 
-		Enrollment enrollment = new Enrollment();
-		restTemplate.postForEntity(registration_url, enrollment, Enrollment.class);
+		EnrollmentDTO enrollment = new EnrollmentDTO(course_id);
+		restTemplate.postForEntity(registration_url, enrollment, EnrollmentDTO.class);
 	}
 }
