@@ -1,6 +1,8 @@
 package com.cst438.services;
 
 
+import java.util.Optional;
+
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -46,6 +48,15 @@ public class RegistrationServiceMQ extends RegistrationService {
 	@RabbitListener(queues = "gradebook-queue")
 	@Transactional
 	public void receive(EnrollmentDTO enrollmentDTO) {
+		Course c = courseRepository.findById(enrollmentDTO.course_id).orElse(null);
+        if (c != null) {
+            Enrollment e = new Enrollment();
+            e.setCourse(c);
+            e.setStudentEmail(enrollmentDTO.studentEmail);
+            e.setStudentName(enrollmentDTO.studentName);
+            enrollmentRepository.save(e);
+        } 
+        
 		System.out.println("Received Enrollment Message" + enrollmentDTO);
 		
 		
