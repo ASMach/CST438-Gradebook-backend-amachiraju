@@ -16,6 +16,9 @@ class Cst438GradebookApplicationTests {
 	
 	final String TEST_USER_EMAIL = "test@csumb.edu";
 	final String CHROME_DRIVER_FILE_LOCATION = "";
+	final String TEST_COURSE_NAME = "Software Engineering";
+	final String TEST_DUE_DATE = "2022-10-10";
+	final String TEST_COURSE = "CST438";
 	final String URL = "http://localhost:3000/"; // When testing locally
 	//final String URL = "https://cst438gradebook-frontend.herokuapp.com/";
 
@@ -54,7 +57,6 @@ class Cst438GradebookApplicationTests {
 		            if (e != null)
 		                enrollmentRepository.delete(e);
 */
-		            // TODO: Find an a tag (corresponds to + button) on Add.js
 		            
 		            driver.quit();
 		            
@@ -66,25 +68,28 @@ class Cst438GradebookApplicationTests {
 						e2.printStackTrace();
 					}
 		            
+		            // Find the first a tag, which is a + button
 		            driver.findElement(By.xpath("//a")).click();
 		            try {
 						Thread.sleep(SLEEP_DURATION);
 					} catch (InterruptedException e1) {
-						// TODO Auto-generated catch block
+						// Auto-generated catch block
 						e1.printStackTrace();
 					}
 		            
-		         // select the last of the radio buttons 
-		            WebElement we = driver.findElement(By.xpath("(//input[@type='radio'])[last()]"));
+		         // select the inputs and enter values
+		            WebElement we = driver.findElement(By.xpath("(//input[@type='input'])[last()]"));
 		            we.click();
 		            
 		         // enter course no 40442 and click "Add"
-		            driver.findElement(By.xpath("//input[@name='course_id']")).sendKeys(Integer.toString(TEST_COURSE_ID));
+		            driver.findElement(By.xpath("//input[@id='name']")).sendKeys(TEST_COURSE_NAME);
+		            driver.findElement(By.xpath("//input[@id='duedate']")).sendKeys(TEST_DUE_DATE);
+		            driver.findElement(By.xpath("//input[@id='course']")).sendKeys(TEST_COURSE);
 		            driver.findElement(By.xpath("//button[span='Add']")).click();
 		            try {
 						Thread.sleep(SLEEP_DURATION);
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
+						// Auto-generated catch block
 						e.printStackTrace();
 					}
 		            
