@@ -78,10 +78,6 @@ class Cst438GradebookApplicationTests {
 					}
 		            
 		         // select the inputs and enter values
-		            WebElement we = driver.findElement(By.xpath("(//input[@type='input'])[last()]"));
-		            we.click();
-		            
-		         // enter course no 40442 and click "Add"
 		            driver.findElement(By.xpath("//input[@id='name']")).sendKeys(TEST_COURSE_NAME);
 		            driver.findElement(By.xpath("//input[@id='duedate']")).sendKeys(TEST_DUE_DATE);
 		            driver.findElement(By.xpath("//input[@id='course']")).sendKeys(TEST_COURSE);
